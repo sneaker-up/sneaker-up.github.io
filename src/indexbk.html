@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>내 신발 사이즈 구하기</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+</head>
+<body>
+<!--
+<div class="title">
+    <h1>신발 사이즈 구하기</h1>
+    <p>Your Sneaker Size is?</p>
+</div>
+<div>
+    <h2>현재신발</h2>
+    브랜드 : <select name="" id="brand">
+        <option value="jordan">에어조던</option>
+    </select>
+        콜렉션 : <select name="" id="collrection">
+        <option value="jordan1">에어조던1</option>
+    </select>
+        발볼: <select name="" id="footwid">
+        <option value="0">정사이즈</option>
+        <option value="1">넓은편</option>
+        <option value="2">좁은편</option>
+    </select>
+</div>
+<div>
+    <h2>사려는신발</h2>
+    <select name="" id="brand">
+        <option value="jordan">에어조던</option>
+    </select>
+    <select name="" id="collrection">
+        <option value="jordan1">에어조던1</option>
+    </select>
+</div>
+<div class="btn">
+    <button>구하기</button>
+</div>
+
+<footer>
+    신발 사이즈 등록하기
+</footer>
+-->
+
+
+브랜드
+등록되어있는 브랜드 : <select name="" id="selectBrandDB"></select>
+신규 : <input type="text" id="createBrandDB">
+
+해당브랜드에 등록되어있는 콜렉션
+<select name="" id="selectCollrectionDB">
+    <option value=""></option>
+</select>
+신규 : <input type="text" id="createCollrectionDB">
+
+사이즈가이드 :
+<select name="" id="">
+    <option value=""></option>
+</select>
+
+등록하기
+
+<input type="hidden" id="apikey" value="Nb3fTxNHcTmX8w-73QzlpoC4lzj2_DDl" />
+<script>
+// 스니커 리스트에 생성하기
+function createBrandListDB(data,fn){
+    $.ajax({
+        url: "https://api.mongolab.com/api/1/databases/sneakers/collections/sneaker-brand?apikey="+$("#apikey").val(),
+        type: "POST",
+        data: JSON.stringify( data ),
+        contentType: "application/json"
+    }).done(function( brand ) {
+        fn.call(null,brand);
+    });
+};
+function loadBrandListDB(fn){
+    $.ajax({
+        url: "https://api.mongolab.com/api/1/databases/sneakers/collections/sneaker-brand?apikey="+$("#apikey").val()
+    }).done(function( brandList ) {
+        fn.call(null,brandList);
+});
+};
+/*
+    var footwidDB = {
+        large:1.2, // 발볼러
+        fit : 0, // 정
+        small :0.8, // 칼발
+    };
+    var brandDB = [
+        {
+            brand:"brand0",
+            name:"에어조던",
+            handicap:-2
+        },{
+            brand:"brand1",
+            name:"나이키",
+            handicap:-2
+        }
+    ];
+    var collrectionDB = [
+        {
+            brand:"brand0",
+            name:"에어조던1",
+            handicap:-4
+        },{
+            brand:"brand0",
+            name:"에어조던2",
+            handicap:0
+        },{
+            brand:"brand1",
+            name:"에어포스",
+            handicap:+1
+        }
+    ];
+*/
+function initBrandDB(){
+    var selBrandObj = $("#selectBrandDB");
+    selBrandObj.html("");
+    loadBrandListDB(function(brandList){
+        if(brandList.length){
+            _.each(brandList,function(brand){
+                selBrandObj.append("<option value='"+brand.brand+"'>"+brand.name+"</option>");
+            });
+        };
+        selBrandObj.append("<option value='brandnew'>신규등록</option>");
+    });
+};
+
+$(function(){
+    initBrandDB();
+});
+</script>
+
+
+조던 : -2
+반업 : -4
+정/반업 : -2
+정 : 0
+정/반다운 : +2
+반다운 : +4
+
+
+정 : 0
+발볼러 : -3
+칼발러 : +2
+
+
+사용자
+- 조던1 : 275
+
+조던 : -2
+조던1(반업) :  -2
+-6 * 1.2
+- 7.2
+
+267.8
+
+발볼러 : -3
+
+실제(정,예상) : 266
+
+프로스펙스 : -1
+임펄스 : -2
+=> 예상치 : 263
+=> 265로 정리
+
+조던12 일경우
+조던 : 패널티 : +2
+조던12 : 패널티 : -4
+=> 예상치 : 264
+=> 265로 정리
+
+조던11 일경우
+조던 :  패널티 : +2
+조던11 : 패널티 : +2
+=> 예상치 : 270
+=> 조던11 : 270
+
+조던4 일경우
+조던 : +2
+조던 4 : -2
+
+예상치 : 267
+추천 : 270
+
+
+
+
+
+
+
+
+
+
+
+
+
+조던13 : 275mm
+
+
+
+
+</body>
+</html>
