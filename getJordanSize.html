@@ -2,12 +2,11 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>스니커 사이즈 계산기</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-
-
 </head>
 <body>
 <script>
@@ -132,6 +131,7 @@
     <h1 style="font-size:28px;">스니커 사이즈 계산기</h1>
     <p style="text-align:right;font-size:11px;">make by <a href="http://dstyle0210.github.io/" target="_blank">dstyle</a></p>
     <div>
+        <h2 style="font-size:14px;">신고있는 신발을 입력하세요.</h2>
         <select name="" id="brand">
             <option value="jordan1">조던1</option>
             <option value="jordan2">조던2</option>
@@ -156,6 +156,7 @@
         </select>
     </div>
     <div>
+        <h2 style="font-size:14px;">구매하실 신발을 입력하세요.</h2>
         <select name="" id="brand_new">
             <option value="jordan1">조던1</option>
             <option value="jordan2">조던2</option>
@@ -172,8 +173,8 @@
             <option value="jordan13">조던13</option>
             <option value="jordan14">조던14</option>
         </select>
+        <button onclick="getJordanFootSize();">사이즈 구하기</button>
     </div>
-    <button onclick="getJordanFootSize();">구하기</button>
     <div id="sneaker_result"></div>
 </div>
 </div>
