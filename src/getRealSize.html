@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+
+
+</head>
+<body>
+<script>
+// feet는 발볼에 따른 발사이즈 크기적용값.(정사이즈 : 15)
+// 발사이즈 계수 : 0.98
+var items = [
+    {company:"NIKE",brand:"jordan5",feet:16,size:0.98}, // 사이즈 : 정 , 발볼 : 정
+    {company:"NIKE",brand:"jordan1",feet:15,size:0.98}, // 사이즈 : 정 , 발볼 : 좁은
+    {company:"NIKE",brand:"jordan12",feet:17,size:0.97}, // 사이즈 : 정/긴 , 발볼 : 넓은
+]
+</script>
+<div>
+<style>
+.selectSizeGuide{width:320px;overflow:hidden;}
+.sizeOptions{width:100%;}
+.sizeOptions>label{width:14.2%;}
+</style>
+<div class="selectSizeGuide">
+    <h2>사이즈 선택</h2>
+    <p>신발의 발길이에 대하여 선택하여 주세요.</p>
+    <div class="sizeOptions btn-group" id="sizeOptions" data-toggle="buttons">
+        <input type="hidden" name="sizehidden" id="sizehidden" value="F">
+        <label class="btn btn-default" title="매우 작은"><input type="radio" name="options" value="XXS"></label>
+        <label class="btn btn-default" title="작은"><input type="radio" name="options" value="XS"></label>
+        <label class="btn btn-default" title="정/작은"><input type="radio" name="options" value="S"></label>
+        <label class="btn btn-primary active" title="정사이즈"><input type="radio" name="options" checked="checked" value="F"></label>
+        <label class="btn btn-default" title="정/큰"><input type="radio" name="options" value="L"></label>
+        <label class="btn btn-default" title="큰"><input type="radio" name="options" value="XL"></label>
+        <label class="btn btn-default" title="매우 큰"><input type="radio" name="options" value="XXL"></label>
+    </div>
+    <div style="width:100%;overflow:hidden;font-size:11px;">
+        <span style="float:left;">작은</span>
+        <span style="float:right;">큰</span>
+    </div>
+</div>
+<div class="selectSizeGuide">
+    <h2>발볼 선택</h2>
+    <p>신발의 발볼 너비(폭)에 대하여 선택하여 주세요.</p>
+    <div class="sizeOptions btn-group" id="sizeOptions" data-toggle="buttons">
+        <input type="hidden" name="sizehidden" id="sizehidden" value="F">
+        <label class="btn btn-default" title="매우 좁은"><input type="radio" name="options" value="XXS"></label>
+        <label class="btn btn-default" title="좁은"><input type="radio" name="options" value="XS"></label>
+        <label class="btn btn-default" title="정/좁은"><input type="radio" name="options" value="S"></label>
+        <label class="btn btn-primary active" title="정사이즈"><input type="radio" name="options" checked="checked" value="F"></label>
+        <label class="btn btn-default" title="정/넓은"><input type="radio" name="options" value="L"></label>
+        <label class="btn btn-default" title="넓은"><input type="radio" name="options" value="XL"></label>
+        <label class="btn btn-default" title="매우 넓은"><input type="radio" name="options" value="XXL"></label>
+    </div>
+    <div style="width:100%;overflow:hidden;font-size:11px;">
+        <span style="float:left;">좁은</span>
+        <span style="float:right;">넓은</span>
+    </div>
+</div>
+
+<script>
+$("#sizeOptions [name=options]").on("change",function(){
+    $("#sizeOptions [name=options]").each(function(){
+       if( $(this).is(":checked") ){
+           $(this).parent().attr("class","btn btn-primary");
+           $("#sizehidden").val( $(this).val() );
+       }else{
+           $(this).parent().attr("class","btn btn-default");
+       }
+    });
+});
+</script>
+
+<h3>입력정보</h3>
+<div>
+    <select name="" id="size">
+        <option value="XXS">매우 작은</option>
+        <option value="XS">작은</option>
+        <option value="S">정/작은</option>
+        <option value="M" selected>정</option>
+        <option value="L">정/큰</option>
+        <option value="XL">큰</option>
+        <option value="XXL">매우 큰</option>
+    </select>
+    <select name="" id="feet">
+        <option value="XXS">매우 좁은</option>
+        <option value="XS">좁은</option>
+        <option value="S">정/좁은</option>
+        <option value="M" selected>정</option>
+        <option value="L">정/넓은</option>
+        <option value="XL">넓은</option>
+        <option value="XXL">매우 넓은</option>
+    </select>
+    <input type="text" name="" id="foot" value="280">
+    <select name="" id="feetup">
+        <option value="2">칼발</option>
+        <option value="0" selected>정발</option>
+        <option value="-5">발볼러</option>
+    </select>
+</div>
+
+<div>
+    <select name="" id="f_size">
+        <option value="XXS">매우 작은</option>
+        <option value="XS">작은</option>
+        <option value="S">정/작은</option>
+        <option value="M" selected>정</option>
+        <option value="L">정/큰</option>
+        <option value="XL">큰</option>
+        <option value="XXL">매우 큰</option>
+    </select>
+    <select name="" id="f_feet">
+        <option value="XXS">매우 좁은</option>
+        <option value="XS">좁은</option>
+        <option value="S">정/좁은</option>
+        <option value="M" selected>정</option>
+        <option value="L">정/넓은</option>
+        <option value="XL">넓은</option>
+        <option value="XXL">매우 넓은</option>
+    </select>
+</div>
+<button onclick="getFootSize();">구하기</button>
+</div>
+<div id="result"></div>
+
+
+
+<div>
+    <select name="" id="brand">
+        <option value="jordan1">조던1</option>
+        <option value="jordan2">조던2</option>
+        <option value="jordan3">조던3</option>
+        <option value="jordan4">조던4</option>
+        <option value="jordan5">조던5</option>
+        <option value="jordan6">조던6</option>
+        <option value="jordan7">조던7</option>
+        <option value="jordan8">조던8</option>
+        <option value="jordan9">조던9</option>
+        <option value="jordan10">조던10</option>
+        <option value="jordan11">조던11</option>
+        <option value="jordan12">조던12</option>
+        <option value="jordan13">조던13</option>
+        <option value="jordan14">조던14</option>
+    </select>
+    <input type="text" name="" id="brand_foot" value="280">
+    <select name="" id="brand_feetup">
+        <option value="2">칼발</option>
+        <option value="0" selected>정발</option>
+        <option value="-5">발볼러</option>
+    </select>
+</div>
+<div>
+    <select name="" id="brand_new">
+        <option value="jordan1">조던1</option>
+        <option value="jordan2">조던2</option>
+        <option value="jordan3">조던3</option>
+        <option value="jordan4">조던4</option>
+        <option value="jordan5">조던5</option>
+        <option value="jordan6">조던6</option>
+        <option value="jordan7">조던7</option>
+        <option value="jordan8">조던8</option>
+        <option value="jordan9">조던9</option>
+        <option value="jordan10">조던10</option>
+        <option value="jordan11">조던11</option>
+        <option value="jordan12">조던12</option>
+        <option value="jordan13">조던13</option>
+        <option value="jordan14">조던14</option>
+    </select>
+</div>
+<button onclick="getJordanFootSize();">구하기</button>
+</div>
+<script>
+function n(v){
+    return sizeGuide[v];
+};
+function f(v){
+    return feetGuide[v];
+};
+var sizeGuide = {
+    XXS:(-5/3)*3,
+    XS:(-5/3)*2,
+    S:(-5/3)*1,
+    M:0,
+    L:(5/3)*1,
+    XL:(5/3)*2,
+    XXL:(5/3)*3
+};
+var feetGuide = {
+    XXS:15+(15/6)*3,
+    XS:15+(15/6)*2,
+    S:15+(15/6)*1,
+    M:15,
+    L:15+(-15/6)*1,
+    XL:15+(-15/6)*2,
+    XXL:15+(-15/6)*3
+};
+var jordanGuide = function(name){
+    var guide = [
+        {name:"jordan1",size:"M",feet:"XXS"},
+        {name:"jordan2",size:"M",feet:"M"},
+        {name:"jordan3",size:"M",feet:"XS"},
+        {name:"jordan4",size:"M",feet:"XS"},
+        {name:"jordan5",size:"M",feet:"M"},
+        {name:"jordan6",size:"M",feet:"XL"},
+        {name:"jordan7",size:"M",feet:"XXL"},
+        {name:"jordan8",size:"M",feet:"XL"},
+        {name:"jordan9",size:"M",feet:"L"},
+        {name:"jordan10",size:"M",feet:"M"},
+        {name:"jordan11",size:"M",feet:"S"},
+        {name:"jordan12",size:"M",feet:"XXL"},
+        {name:"jordan13",size:"M",feet:"XXL"},
+        {name:"jordan14",size:"M",feet:"M"}
+    ];
+    var jordan = _.find(guide,{name:name});
+    return {size:sizeGuide[jordan.size],feet:feetGuide[jordan.feet]};
+};
+function getFootSize(){
+    // 사이즈만 계산함.
+    var nowSneakerSizeGap = n( $("#size").val() ); // 신고 있는 신발의 사이즈 계수. (길수록, 계수는 높다.)
+    var newSneakerSizeGap = n( $("#f_size").val() ); // 새로운 신발의 사이즈 계수. (길수록, 계수는 높다.)
+    var userFoot = Number($("#foot").val()) + nowSneakerSizeGap;
+    var sneakerFoot = userFoot - newSneakerSizeGap;
+
+    // 발볼만 계산함.
+    var nowSneakerFeetGap = f( $("#feet").val() ); // 신고 있는 신발의 발볼 계수. 넓을수록 높다.
+    var newSneakerFeetGap = f( $("#f_feet").val() ); // 새로운 신발의 발볼 계수. 넓을수록 높다.
+    var userFeet = userFoot - nowSneakerFeetGap;
+    var sneakerFeet = userFeet + newSneakerFeetGap;
+
+    //결론
+    var result = (sneakerFeet+sneakerFoot)/2;
+};
+
+function getJordanFootSize(){
+    var nowBrandGap = jordanGuide($("#brand").val());
+    var newBrandGap = jordanGuide($("#brand_new").val());
+    var userFoot = Number($("#brand_foot").val()) + nowBrandGap.size;
+    var sneakerFoot = userFoot - newBrandGap.size;
+
+    // 발볼만 계산함.
+    var userFeet = userFoot - nowBrandGap.feet;
+    var sneakerFeet = userFeet + newBrandGap.feet;
+
+    //결론
+    var result = (sneakerFeet+sneakerFoot)/2;
+    console.log(result);
+}
+
+
+</script>
+</body>
+</html>
